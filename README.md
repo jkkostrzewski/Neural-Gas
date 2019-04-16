@@ -31,7 +31,7 @@ data = pd.read_csv("irisData.csv", header=0)
 Initialize NeuralGas class with specified parameters:
 
 ```
-neural_gas = Neural Gas(data, no_of_neurons=15, iterations=3000, display_animation=True, display_current_iteration=False,
+neural_gas = NeuralGas(data, no_of_neurons=15, iterations=3000, display_animation=True, display_current_iteration=False,
               skip_frames_count=15)
 ```
 
