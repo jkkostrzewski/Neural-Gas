@@ -16,10 +16,11 @@ First, you need to install these libraries:
 ### Importing library to your python script
 
 Clone the repository or download zip version and copy "Neural_Gas.py" to the folder with your python script.
-To run the code you have to import it first:
+To run the code you have to import the Neural_Gas class and pandas library:
 
 ```
-import * from Neural_Gas
+import pandas as pd
+import Neural_Gas
 ```
 
 Then import your set of data from .csv file:
@@ -31,7 +32,7 @@ data = pd.read_csv("irisData.csv", header=0)
 Initialize NeuralGas class with specified parameters:
 
 ```
-neural_gas = NeuralGas(data, no_of_neurons=15, iterations=3000, display_animation=True, display_current_iteration=False,
+neural_gas = Neural_Gas.NeuralGas(data, no_of_neurons=15, iterations=3000, display_animation=True, display_current_iteration=False,
               skip_frames_count=15)
 ```
 
