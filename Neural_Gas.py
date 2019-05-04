@@ -52,7 +52,7 @@ def plot(data, neurons, color, fig_arr):
     plt.pause(0.001)
 
 
-class Neural_Gas:
+class NeuralGas:
     def __init__(self, data, no_of_neurons=25, iterations=1000, display_animation=True, display_current_iteration=True,
                  skip_frames_count=1):
         data = data.reset_index()
