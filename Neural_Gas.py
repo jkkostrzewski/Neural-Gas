@@ -7,12 +7,9 @@ from sklearn import preprocessing
 
 class CNode:
     def __init__(self, nr_of_weights):
-        self.weights = []
         self.distance_to_input = None
-
         # initialize random weights
-        for i in range(nr_of_weights):
-            self.weights.append(random.uniform(0.35, 0.75))
+        self.weights = [random.uniform(0.35, 0.75) for i in range(nr_of_weights)]
 
     def get_distance_to_input(self):
         return self.distance_to_input
@@ -62,7 +59,7 @@ class NeuralGas:
         x_scaled = min_max_scaler.fit_transform(x)
         self._data = pd.DataFrame(x_scaled)
 
-        self._node_array = []
+        self._node_array = [CNode(len(self._data.columns) - 1) for n in range(no_of_neurons)]
         self._k_max = iterations
         self._k = 0        # current_iteration
         self._influence = 0
@@ -74,16 +71,13 @@ class NeuralGas:
         self._display_animation = display_animation
         self._display_current_iteration = display_current_iteration
         self._skip_frames_count = skip_frames_count
+
         self._fig_count = int((len(self._data.columns) - 1) / 4)
         if (len(self._data.columns) - 1) % 4 == 2:
             self._fig_count += 1
-        self._fig_arr = []
 
-        for fig in range(self._fig_count):
-            self._fig_arr.append(plt.figure(figsize=(6, 10)))
+        self._fig_arr = [plt.figure(figsize=(6, 10)) for fig in range(self._fig_count)]
 
-        for n in range(no_of_neurons):
-            self._node_array.append(CNode(len(self._data.columns) - 1))
 
     def sort_nodes(self, node_array, input_array):
         for node in node_array:
@@ -101,9 +95,7 @@ class NeuralGas:
     def calculate_error(self):
         distance = 0
         for i in range(len(self._data)):
-            point = []
-            for j in range(1, len(self._data.columns)):
-                point.append(self._data.iloc[i, j])
+            point = [self._data.iloc[i, j] for j in range(1, len(self._data.columns))]
             self.sort_nodes(self._node_array, point)
             bmu = self._node_array[0]
             distance += bmu.get_distance(point)
@@ -114,11 +106,8 @@ class NeuralGas:
         while self._k <= self._k_max:
             if self._display_current_iteration:
                 print(self._k)
-            random_point = []
             random_int = random.randint(0, len(self._data)-1)
-
-            for i in range(1, len(self._data.columns)):
-                random_point.append(self._data.iloc[random_int, i])
+            random_point = [self._data.iloc[random_int, i] for i in range(1, len(self._data.columns))]
 
             self._node_array = self.sort_nodes(self._node_array, random_point)
 
@@ -141,4 +130,3 @@ class NeuralGas:
         plt.title("Quantization error chart for each epoch")
         plt.plot([row[1] for row in self._error_array], [row[0] for row in self._error_array])
         plt.show()
-
